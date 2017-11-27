@@ -1,17 +1,15 @@
-local playerdata = {}
 local callbacks = {}
 
 local setup = function(player)
-	local c = {}
-	playerdata[player] = { env={} }
-	callbacks[player] = c
+	callbacks[player] = {}
 end
 minetest.register_on_joinplayer(setup)
 
 local cleanup = function(player)
-	playerdata[player] = nil
 	callbacks[player] = nil
 end
+
+
 
 local run_if_player = function(objectref, func, ...)
 	if objectref:is_player() then
