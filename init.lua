@@ -7,5 +7,7 @@ _modpath=modpath
 local rcloader = dofile(modpath.."rcloader.lua")
 rc = rcloader
 
+dofile(modpath.."commands.lua")
+
 
 _modpath = nil
