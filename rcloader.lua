@@ -39,6 +39,7 @@ end
 
 local console = print
 local cond = function(c, v) if c then return v else return nil end end
+local rcname = "playerenv.rc.lua"
 local loadrc = function(playerref, env, opts)
 	local playername = playerref:get_player_name()
 	local rawprint = mk_chat_printer(playername, "[lua script] ")
@@ -52,8 +53,8 @@ local loadrc = function(playerref, env, opts)
 
 	local worldpath = minetest.get_worldpath() or error("worldpath returned nil!?")
 	local list = {
-		modpath.."playerenv.rc.lua",
-		worldpath.."/console.rc.lua",
+		modpath..rcname,
+		worldpath.."/"..rcname,
 	}
 
 	local warnings = {}
