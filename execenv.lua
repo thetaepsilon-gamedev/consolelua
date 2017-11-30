@@ -16,7 +16,7 @@ local prettyprint = mtrequire("com.github.thetaepsilon.minetest.libmthelpers.pre
 local send = minetest.chat_send_player
 local err_throw = function(self, msg) send(self.name, "[lua exception] "..msg) end
 local err_syntax = function(self, msg) send(self.name, "[lua syntax error] "..msg) end
-local send_result = function(self, msg) send(self.name, "[lua result] "..msg) end
+local send_result = function(self, msg) send(self.name, "[lua result]  "..msg) end
 local mk_chat = function(player)
 	local name = player:get_player_name()
 	local self = {
@@ -52,9 +52,10 @@ end
 
 
 
-local vfmt = prettyprint.vfmt
+local vsfmt = prettyprint.vsfmt
+local sep = ", "
 local vfmt_if_nonempty = function(...)
-	if select("#", ...) > 0 then return vfmt(...) end
+	if select("#", ...) > 0 then return vsfmt(sep, ...) end
 end
 -- the compiled statement may throw due to bad indexes, incompatible operations etc.
 -- in order to preserve the number of varargs potentially returned from an eval'd chunk,
