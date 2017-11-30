@@ -5,12 +5,12 @@ point_tool_callbacks = dofile(modpath.."point_tool.lua")
 
 _mod = {}
 _modpath=modpath
-local execenv = dofile(modpath.."execenv.lua")
-eenv = execenv
 
 _mod.privdata = dofile(modpath.."privs.lua")
 dofile(modpath.."commands.lua")
 
+local registry = dofile(modpath.."player_registry.lua")
+reg = registry
 
 _modpath = nil
 _mod = {}
