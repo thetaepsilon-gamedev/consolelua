@@ -1,7 +1,7 @@
 local privs = _mod.privdata.privs
 local devp = _mod.privdata.devp
 local cmd = devp.."lua"
-local reg = _mod.registry
+local getenv = _mod.regutil.get
 
 
 
@@ -13,13 +13,13 @@ local mk_handle_wrapper = function(f)
 end
 
 local reset = function(player, data)
-	reg[player]:reset()
+	getenv(player):reset()
 end
 local reload = function(player, data)
-	reg[player]:reload()
+	getenv(player):reload()
 end
 local exec = function(player, data)
-	reg[player]:exec(data)
+	getenv(player):exec(data)
 end
 
 
