@@ -53,10 +53,13 @@ end
 
 
 local vfmt = prettyprint.vfmt
+local vfmt_if_nonempty = function(...)
+	if select("#", ...) > 0 then return vfmt(...) end
+end
 -- the compiled statement may throw due to bad indexes, incompatible operations etc.
 -- in order to preserve the number of varargs potentially returned from an eval'd chunk,
 -- we have to try to format the results inside pcall.
-local vfmt_result = function(env, f) return vfmt(f()) end
+local vfmt_result = function(env, f) return vfmt_if_nonempty(f()) end
 local exec = function(self, st)
 	local chat = self.chat
 	local success = true
@@ -72,7 +75,7 @@ local exec = function(self, st)
 		if not success then
 			chat:err_throw(result)
 		else
-			chat:send_result(result)
+			if result then chat:send_result(result) end
 		end
 	end
 
