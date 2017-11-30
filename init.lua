@@ -8,6 +8,7 @@ _modpath=modpath
 local execenv = dofile(modpath.."execenv.lua")
 eenv = execenv
 
+_mod.privdata = dofile(modpath.."privs.lua")
 dofile(modpath.."commands.lua")
 
 
