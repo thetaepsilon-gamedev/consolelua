@@ -7,10 +7,11 @@ _mod = {}
 _modpath=modpath
 
 _mod.privdata = dofile(modpath.."privs.lua")
-dofile(modpath.."commands.lua")
 
 local registry = dofile(modpath.."player_registry.lua")
-reg = registry
+_mod.registry = registry
+
+dofile(modpath.."commands.lua")
 
 _modpath = nil
 _mod = {}
