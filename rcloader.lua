@@ -18,7 +18,6 @@ as the loading process aborts.
 
 local envdo = dofile(_modpath.."envdo.lua")
 local prettyprint = mtrequire("com.github.thetaepsilon.minetest.libmthelpers.prettyprint")
-local tableutils = mtrequire("com.github.thetaepsilon.minetest.libmthelpers.tableutils")
 local modpath = _modpath
 
 local i = {}
@@ -29,6 +28,7 @@ local mk_chat_printer = function(name, prefix)
 	if not prefix then prefix = "" end
 	return function(msg) return minetest.chat_send_player(name, prefix..msg) end
 end
+i.mk_chat_printer = mk_chat_printer
 local mk_print = function(rawprint)
 	return function(...)
 		return rawprint(prettyprint.vfmt(...))
@@ -77,6 +77,10 @@ local loadrc = function(playerref, env, opts)
 	return not fail, cond(fail, err), cond(fail, message)
 end
 i.loadrc = loadrc
+
+
+
+i.eval = envdo.eval
 
 
 
