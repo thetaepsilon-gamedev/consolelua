@@ -57,23 +57,30 @@ local loadrc = function(playerref, env, worldpath, opts)
 	}
 
 	local warnings = {}
-	local result, err, message
+	local result, err, message, offender
 	local fail = false
 	for _, rcfile in ipairs(list) do
 		result, err, message = envdo.load(env, rcfile, "rc file "..rcfile)
 		if result == nil then
+			-- skip non-existant files.
+			-- TODO: can io error types be distinguished?
 			if err ~= "iofail" then fail = true end
-			break
+		else
+			local ok
+			ok, message = pcall(result)
+			if not ok then
+				err = "execfail"
+				fail = true
+			end
 		end
-		local ok
-		ok, message = pcall(result)
-		if not ok then
-			err = "execfail"
-			fail = true
+
+		if fail then
+			offender = rcfile
+			break
 		end
 	end
 
-	return not fail, cond(fail, err), cond(fail, message)
+	return not fail, cond(fail, err), cond(fail, message), offender
 end
 i.loadrc = loadrc
 
