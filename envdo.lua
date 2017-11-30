@@ -42,10 +42,15 @@ i.load = envload
 
 -- calls the result of loadstring inside a specified environment.
 local enveval = function(env, st)
-	local chunk, throw = loadstring(st)
-	if not chunk then error("enveval loadstring error: "..throw) end
-	setfenv(chunk, env)
-	return chunk()
+	local result, err, message
+	result, message = loadstring(st)
+	if not result then
+		err = e_loadfail
+	else
+		setfenv(result, env)
+	end
+
+	return result, err, message
 end
 i.eval = enveval
 
