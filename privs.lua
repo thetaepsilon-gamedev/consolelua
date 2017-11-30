@@ -1,7 +1,7 @@
 -- register the privileges needed for the player to use the lua command.
 
 -- prefix during development to avoid problems with luacmd.
-local devp = "xcmd_"
+local devp = ""
 
 local priv = devp.."lua"
 local privs = { [priv] = true }
