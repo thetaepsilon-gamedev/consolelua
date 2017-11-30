@@ -40,10 +40,21 @@ local envload = function(env, filename, label)
 end
 i.load = envload
 
+-- interestingly, loadstring reacts differently to being explicitly passed a nil for the second arg,
+-- as opposed to simply omitting the label argument.
+local loadst = function(st, label)
+	if label then
+		return loadstring(st, label)
+	else
+		return loadstring(st)
+	end
+end
+
 -- calls the result of loadstring inside a specified environment.
-local enveval = function(env, st)
+local enveval = function(env, st, label)
 	local result, err, message
-	result, message = loadstring(st)
+
+	result, message = loadst(st, label)
 	if not result then
 		err = e_loadfail
 	else
