@@ -11,7 +11,9 @@ local wp = minetest.get_worldpath()
 
 
 local setup = function(player)
-	registry[player] = execenv.new(player, wp)
+	if minetest.check_player_privs(player, privs) then
+		registry[player] = execenv.new(player, wp)
+	end
 end
 local teardown = function(player)
 	registry[player] = nil
