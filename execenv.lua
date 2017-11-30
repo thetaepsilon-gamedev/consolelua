@@ -65,8 +65,8 @@ local exec = function(self, st)
 	local chat = self.chat
 	local success = true
 
-	local chunk, err, message = eval(self.env, st)
-	chunk, err, message = eval(self.env, st)
+	local chunk, err, message
+	chunk, err, message = eval(self.env, st, self.cmdlabel)
 	if not chunk then
 		chat:err_syntax(message)
 		success = false
@@ -92,6 +92,7 @@ local construct = function(player, worldpath)
 	self.chat = mk_chat(player)
 	reset(self)
 
+	self.cmdlabel = "lua command"
 	self.exec = exec
 	self.reset = reset
 	self.reload = reload
