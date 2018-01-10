@@ -17,6 +17,23 @@ local print_player = function(self, msg)
 	minetest.chat_send_player(name, msg)
 end
 
+
+
+local i = {}
+
+local mk_user_ref_from_player = function(player)
+	local result = {}
+
+	result.name = player:get_player_name()
+	result.ref = player
+	result.sendtext = print_player
+
+	return result
+end
+i.mk_user_ref_from_player = mk_user_ref_from_player
+
+
+
 --[[
 Returned interface:
 	i:sendtext(msg)
@@ -25,18 +42,16 @@ Returned interface:
 		respectively, name and player ref objects for this player.
 		may be nil.
 ]]
+
 local mk_user_ref = function(player)
-	local result = {}
-
 	if player then
-		result.name = player:get_player_name()
-		result.ref = player
-		result.sendtext = print_player
+		return mk_user_ref_from_player(player)
 	else
-		result.sendtext = print_server
+		return { sendtext = print_server }
 	end
-
-	return result
 end
+i.mk_user_ref = mk_user_ref
 
-return mk_user_ref
+
+
+return i
