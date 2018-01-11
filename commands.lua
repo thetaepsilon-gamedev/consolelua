@@ -1,7 +1,13 @@
 local privs = _mod.privdata.privs
 local devp = _mod.privdata.devp
 local cmd = devp.."lua"
-local getenv = _mod.regutil.get
+local execreg = _mod.regutil
+
+local playerwrapper = _mod.playerwrapper
+local factory = playerwrapper.player_userref_factory(false)
+local getenv = function(player)
+	return execreg.get(player, factory)
+end
 
 
 

@@ -12,6 +12,7 @@ local registry, util = dofile(modpath.."user_registry.lua")
 --_mod.registry = registry
 _mod.regutil = util
 
+_mod.playerwrapper = dofile(modpath.."obtain_player_env.lua")
 dofile(modpath.."commands.lua")
 
 _modpath = nil
