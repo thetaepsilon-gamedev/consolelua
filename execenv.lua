@@ -14,13 +14,15 @@ local prettyprint = mtrequire("com.github.thetaepsilon.minetest.libmthelpers.pre
 
 -- the "chat" object used below to send feedback to the player.
 local send = minetest.chat_send_player
-local err_throw = function(self, msg) send(self.name, "[lua exception] "..msg) end
-local err_syntax = function(self, msg) send(self.name, "[lua syntax error] "..msg) end
-local send_result = function(self, msg) send(self.name, "[lua result]  "..msg) end
-local mk_chat = function(player)
-	local name = player:get_player_name()
+local err_throw = function(self, msg) self:send("[lua exception] "..msg) end
+local err_syntax = function(self, msg) self:send("[lua syntax error] "..msg) end
+local send_result = function(self, msg) self:send("[lua result]  "..msg) end
+local send_raw = function(self, msg) return self.userref:sendtext(msg) end
+
+local mk_chat = function(userref)
 	local self = {
-		name = name,
+		userref = userref,
+		send = send_raw,
 		err_throw = err_throw,
 		err_syntax = err_syntax,
 		send_result = send_result,
@@ -31,9 +33,11 @@ end
 
 
 local reload = function(self)
-	local ok, err, message, offender = rcloader.loadrc(self.player, self.env, self.worldpath)
+	local opts = {}
+	local chat = self.chat
+	local rawprint = function(msg) return chat:send(msg) end
+	local ok, err, message, offender = rcloader.loadrc(self.userref, self.env, self.worldpath, opts, rawprint)
 	if not ok then
-		local chat = self.chat
 		local failmsg = "reload failed while loading "..offender..": "..err..": "..message
 		local abortmsg = "environment load has been aborted due to previous errors."
 		local msgs = { failmsg, abortmsg }
@@ -85,11 +89,11 @@ end
 
 
 
-local construct = function(player, worldpath)
+local construct = function(userref, worldpath)
 	local self = {}
-	self.player = player
+	self.userref = userref
 	self.worldpath = worldpath
-	self.chat = mk_chat(player)
+	self.chat = mk_chat(userref)
 	reset(self)
 
 	self.cmdlabel = "lua command"

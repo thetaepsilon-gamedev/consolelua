@@ -40,13 +40,11 @@ end
 local console = print
 local cond = function(c, v) if c then return v else return nil end end
 local rcname = "playerenv.rc.lua"
-local loadrc = function(playerref, env, worldpath, opts)
-	local playername = playerref:get_player_name()
-	local rawprint = mk_chat_printer(playername, "[lua script] ")
+local loadrc = function(userref, env, worldpath, opts, rawprint)
 	local print = mk_print(rawprint)
 
-	env.me = playerref
-	env.myname = playername
+	env.me = userref.ref
+	env.myname = userref.name
 	env.console = console
 	env.rawprint = rawprint
 	env.print = print
