@@ -37,7 +37,6 @@ end
 
 
 
-local console = print
 local cond = function(c, v) if c then return v else return nil end end
 local rcname = "playerenv.rc.lua"
 local loadrc = function(userref, env, worldpath, opts, rawprint)
@@ -45,7 +44,6 @@ local loadrc = function(userref, env, worldpath, opts, rawprint)
 
 	env.me = userref.ref
 	env.myname = userref.name
-	env.console = console
 	env.rawprint = rawprint
 	env.print = print
 
