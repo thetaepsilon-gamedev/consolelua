@@ -18,6 +18,7 @@ nil *cannot* occur when properly called.
 ]]
 
 local i = {}
+i.console = console
 
 -- obtain player's user ref implementation.
 local get_env_for_player = function(player, expected)

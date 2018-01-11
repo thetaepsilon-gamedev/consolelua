@@ -6,7 +6,7 @@ local execreg = _mod.regutil
 local playerwrapper = _mod.playerwrapper
 local factory = playerwrapper.player_userref_factory(false)
 local getenv = function(player)
-	return execreg.get(player, factory)
+	return execreg.get(player or playerwrapper.console, factory)
 end
 
 
