@@ -21,6 +21,13 @@ end
 
 local i = {}
 
+-- a symbolic object which is used to indicate the "console player".
+-- it will always be unique compared to any possible player ref as they must be distinct in memory.
+local console = {}
+i.console = console
+
+
+
 local mk_user_ref_from_player = function(player)
 	local result = {}
 
@@ -44,7 +51,11 @@ Returned interface:
 ]]
 
 local mk_user_ref = function(player)
-	if player then
+	if not player then
+		error("mk_user_ref() nil player reference passed!")
+	end
+
+	if not player == console then
 		return mk_user_ref_from_player(player)
 	else
 		return { sendtext = print_server }
