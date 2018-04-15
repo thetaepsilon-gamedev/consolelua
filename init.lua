@@ -14,6 +14,7 @@ _mod.regutil = util
 
 _mod.playerwrapper = dofile(modpath.."obtain_player_env.lua")
 dofile(modpath.."commands.lua")
+dofile(modpath.."logout.lua")
 
 _modpath = nil
 _mod = {}
