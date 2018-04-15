@@ -28,10 +28,15 @@ local get_env_for_player = function(player, expected)
 	-- substitute the player ref for the console ID.
 	-- else, if expected but still a nil player ref was passed.
 	-- let the code in user_ref.lua catch it.
-	if not player and not expected then
-		player = console
+	if (player == nil) then
+		if not expected then
+			player = console
+		else
+			error("nil player passed but was expecting valid PlayerRef")
+		end
 	end
 
+	assert(player ~= nil, "Insanity condition: no player!?")
 	return userref.mk_user_ref(player)
 end
 i.get_env_for_player = get_env_for_player
@@ -43,7 +48,7 @@ i.get_env_for_player = get_env_for_player
 -- the first without player expectation and the second with.
 local player_userref_factory = function(isRealPlayerExpected)
 	return function(id)
-		return get_env_for_player(isRealPlayerExpected)
+		return get_env_for_player(id, isRealPlayerExpected)
 	end
 end
 i.player_userref_factory = player_userref_factory
