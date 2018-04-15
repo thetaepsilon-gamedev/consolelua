@@ -5,8 +5,14 @@ local execreg = _mod.regutil
 
 local playerwrapper = _mod.playerwrapper
 local factory = playerwrapper.player_userref_factory(false)
+local console = playerwrapper.console
+assert(console ~= nil)
+
 local getenv = function(player)
-	return execreg.get(player or playerwrapper.console, factory)
+	if not player then
+		player = console
+	end
+	return execreg.get(player, factory)
 end
 
 

@@ -24,6 +24,7 @@ allows the env to send textual data.
 -- (see user_ref.lua), then construct a new environment using that.
 local msg_factory_fail = "user_registry get(): ID didn't exist and unable to construct new environment"
 local get = function(id, factory)
+	assert(id ~= nil, "insanity condition: user_registry get() ID is nil!")
 	local reg = registry[id]
 	if not reg then
 		local impl = factory and factory(id) or nil
