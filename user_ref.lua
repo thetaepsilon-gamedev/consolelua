@@ -55,7 +55,7 @@ local mk_user_ref = function(player)
 		error("mk_user_ref() nil player reference passed!")
 	end
 
-	if not player == console then
+	if player ~= console then
 		return mk_user_ref_from_player(player)
 	else
 		return { sendtext = print_server }
